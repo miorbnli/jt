@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jt.order.mapper.OrderMapper">
+	<!-- 万能转义表达式 -->
+
+	<update id="updateStatusByDate">
+		update tb_order set status=6
+		where created &lt; #{time} and status=1
+	</update>
+	<!-- 通过orderId实现数据关联查询 -->
+	<select id="findOrderById" resultMap="orderRM">
+		select * from tb_order where order_id=#{orderId}
+
+	</select>
+	<!-- 属性分析: type:返回的数据类型 id:唯一标识resultMap方便别人调用 autoMapping:能过将数据表中的全部字段全部映射到全部属性中 
+		能够实现自动的映射user_id userId 该属性添加肯定不错 -->
+	<!-- 由于需要关联映射 需要为orderShipping赋值 一对一封装orderShipping association:表示一对一封装 
+		不出一个对象 property="orderShipping" order对象中的属性orderShipping,为对象赋值 javaType:封装对象的数据类型,与一对一映射标签 
+		association是固定搭配 column:表示order主键信息,用来关联查询 -->
+	<!-- 封装OrderItemList集合 集合封装采用collection标签,数据类型和ofType固定搭配 -->
+	<resultMap type="Order" id="orderRM" autoMapping="true">
+		<!-- 进行关联封装必须先封装属性 -->
+		<id column="order_id" property="orderId" />
+
+		<association property="orderShipping" javaType="OrderShipping"
+			column="order_id" select="findOrderShipping"></association>
+
+		<collection property="orderItems" ofType="OrderItem"
+			column="order_id" select="findOrderItems"></collection>
+	</resultMap>
+	<!-- 根据orderItem实现查询 -->
+	<select id="findOrderShipping" resultMap="orderShipping">
+		select * from tb_order_shipping where order_id=#{orderId}
+	</select>
+	<resultMap type="OrderShipping" id="orderShipping"
+		autoMapping="true">
+		<id column="order_id" property="orderId" />
+		<!-- 由于 autoMapping="true",剩余属性会自动映射 -->
+	</resultMap>
+	<select id="findOrderItems" resultType="OrderItem">
+		select * from tb_order_item where order_id=#{orderId}
+	</select>
+
+</mapper>

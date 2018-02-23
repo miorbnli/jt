@@ -1,0 +1,4 @@
+127.0.0.1 - - [08/Feb/2018:10:08:57 +0800] "GET /web/itemcat/all?callback=category.getDataService HTTP/1.0" 404 981 http-bio-8091-exec-1 42
+127.0.0.1 - - [08/Feb/2018:15:13:55 +0800] "GET / HTTP/1.0" 200 57 http-bio-8091-exec-1 765
+127.0.0.1 - - [08/Feb/2018:15:13:55 +0800] "GET /favicon.ico HTTP/1.0" 404 973 http-bio-8091-exec-2 16
+127.0.0.1 - - [08/Feb/2018:15:13:58 +0800] "GET /page/index HTTP/1.0" 404 971 http-bio-8091-exec-3 7

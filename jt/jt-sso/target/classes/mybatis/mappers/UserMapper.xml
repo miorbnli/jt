@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jt.sso.mapper.UserMapper">
+	<!-- 注意#和$的区别 -->
+	<select id="findCheckUser" resultType="int">
+		select count(*) from tb_user where ${cloumn}=#{param}
+	</select>
+	<!-- 用户登录验证 -->
+	<select id="selectUserByUP" resultType="user">
+		select id,username,password ,phone,email,created,updated
+		from tb_user 
+		where username=#{username} and password=#{password}
+	</select>
+</mapper>

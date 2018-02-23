@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jt.manage.mapper.ItemCatMapper">
+	
+	<!-- 查询商品分类名称 -->
+	<select id="findItemCatNameById" resultType="string">
+		select name from tb_item_cat where id=#{itemCatId};
+	</select>	
+</mapper>

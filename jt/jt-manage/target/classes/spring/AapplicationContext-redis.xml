@@ -1,0 +1,34 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd 
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+	
+	<!-- 通过sprig的方式管理jedis
+		Jedis jedis=new Jedis("192.168.233.139", 6379);
+		补充:有时由于没有导入源码新生成的方法中不会出现方法戏剧社名称,而只有arg1,arg1,arg2
+			这样采用名称注入时可能会产生问题,所以建议使用index进行参数的赋值
+			
+		 public Jedis(final String host, final int port)
+		 问题:通过构造注入的形式,可以通过参数的个数准确的匹配类中的方法,
+		 	如果参数个数相同时,切记需要通过类型区别,否则注入失败
+			 因为spring不知道到底该调用那个方法
+	 -->
+	<bean id="jedis" class="redis.clients.jedis.Jedis">
+		<constructor-arg  index="0" value="${redis.host}" type="java.lang.String"/>
+		<constructor-arg index="1" value="${redis.port}" type="int"/>
+	</bean>
+	
+	
+	
+	
+	
+	
+</beans>
